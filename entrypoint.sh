@@ -1,8 +1,12 @@
-#!/bin/bash -
-###################################################
+#!/bin/bash
+SOURCES=()
+UNFORMATTED_FILES=()
+EXIT_STATUS=0
+
 function log() {
     echo -e "[ gh-action ] :: $1"
 }
+
 function split_csv() {
     IFS=','
     csv_data="$1"
@@ -15,22 +19,9 @@ function split_csv() {
     unset IFS
 }
 
-SOURCES=()
-PROBLEMETIC_FILES=()
-EXIT_STATUS=0
-STYLE="-style=file"
-
-function resolve_inputs() {
-    INPUT_STYLE=${INPUT_STYLE:-"file"}
-    if [[ $INPUT_STYLE != "file" ]]; then
-        STYLE="--style=$INPUT_STYLE"
-    fi
-    INPUT_SOURCES=${INPUT_SOURCES:-"**/*"}
-}
-
 function check_file() {
     local file="$1"
-    message="$(clang-format -n -Werror --ferror-limit=1 $STYLE --fallback-style=LLVM "${file}")"
+    message="$(clang-format -n -Werror --ferror-limit=1 -style=file "${file}")"
     local status="$?"
     if [ $status -ne 0 ]; then
         echo "$message" >&2
@@ -40,34 +31,29 @@ function check_file() {
     return 0
 }
 
-function main() {
-    log "Action started"
-    resolve_inputs
-    log "Sources to check: $INPUT_SOURCES\n"
-    split_csv "$INPUT_SOURCES" SOURCES
-
-    for file in "${SOURCES[@]}"; do
-        check_file "$file"
-        if [ $? -ne 0 ]; then
-            PROBLEMETIC_FILES+=("$file")
-        fi
-    done
-
-    if [ $EXIT_STATUS -eq 0 ]; then
-        log "Congrats! The sources are clang formatted."
-        exit 0
-    else
-        log "Some file is not formatted correctly."
-        log "You might want to run: "
-        for ((i = 0; i < ${#PROBLEMETIC_FILES[@]}; i++)); do
-            if [ $i -ne 0 ]; then
-                echo -n " && "
-            fi
-            echo "clang-format -style=file -i "${PROBLEMETIC_FILES[$i]}" \\"
-        done
-        exit 1
-    fi
-}
-
 cd "$GITHUB_WORKSPACE" || exit 2
-main
+log "Action started"
+log "Sources to check: $INPUT_SOURCES\n"
+split_csv "$INPUT_SOURCES" SOURCES
+
+for file in "${SOURCES[@]}"; do
+    check_file "$file"
+    if [ $? -ne 0 ]; then
+        UNFORMATTED_FILES+=("$file")
+    fi
+done
+
+if [ $EXIT_STATUS -eq 0 ]; then
+    log "Congrats! The sources are clang formatted."
+    exit 0
+else
+    log "Some file is not formatted correctly."
+    log "You might want to run: "
+    for ((i = 0; i < ${#UNFORMATTED_FILES[@]}; i++)); do
+        if [ $i -ne 0 ]; then
+            echo -n " && "
+        fi
+        echo "clang-format -style=file -i "${UNFORMATTED_FILES[$i]}" \\"
+    done
+    exit 1
+fi
