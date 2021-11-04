@@ -3,6 +3,8 @@ SOURCES=()
 UNFORMATTED_FILES=()
 EXIT_STATUS=0
 
+clang-format --version
+
 function log() {
     echo -e "[ gh-action ] :: $1"
 }
