@@ -1,18 +1,18 @@
-# clang-format-fixer
+# clang-format-checker
 
-Create a `clang-format-fix.yml` file in `.github/workflows/`.
+Create a `clang-format-check.yml` file in `.github/workflows/`.
 Paste this code into the file:
 
 ```yml
 on: push
-name: Clang Format Fixer
+name: Clang Format Checker
 jobs:
   lint:
-    name: Clang Format Fixer
+    name: Clang Format Checker
     runs-on: ubuntu-latest
     steps:
-    - name: Clang Format Fixer
-      uses: amhanna/clang-format-fixer@v0.0.0
+    - name: Clang Format Checker
+      uses: amhanna/clang-format-checker@v0.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
