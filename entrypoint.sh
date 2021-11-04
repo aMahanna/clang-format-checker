@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -
 
 SOURCES=()
 UNFORMATTED_FILES=()
