@@ -1,5 +1,4 @@
 #!/bin/sh -
-
 SOURCES=()
 UNFORMATTED_FILES=()
 EXIT_STATUS=0
