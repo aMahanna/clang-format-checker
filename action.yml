@@ -1,0 +1,12 @@
+name: 'clang-format-checker'
+description: 'Google-style linter, wip.'
+author: 'aMahanna'
+inputs: 
+  myInput:
+    description: 'Input to use'
+    default: 'world'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.myInput }}
