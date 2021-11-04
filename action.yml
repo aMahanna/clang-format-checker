@@ -1,18 +1,18 @@
 name: 'clang-format-checker'
 description: 'Google-style linter, wip.'
 author: 'aMahanna'
-inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+inputs:
+  style:
+    description: The style to use by clang-format. 
+    required: false
+    default: 'google'
   sources:
     description: |
       Location of sources to check. It can be a single file,
       regex of a directory or multiple selecteor seprated 
       by comma (`,`)
-    required: true
+    required: false
+    default: "**/*"
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.myInput }}
