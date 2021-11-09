@@ -1,6 +1,9 @@
 name: 'clang-format-checker'
 description: 'Google-style linter, wip.'
 author: 'aMahanna'
+branding:
+  icon: 'code'
+  color: 'orange'
 inputs: 
   sources:
     description: |

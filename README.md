@@ -13,7 +13,7 @@ jobs:
     if: github.ref == 'refs/heads/clang-format-checker'
     steps:
       - uses: actions/checkout@v2
-      - uses: amahanna/clang-format-checker@v1.0.0
+      - uses: aMahanna/clang-format-checker@v1.0.0
         with:
           sources: "src/*.cpp,src/*.h"
 ```
