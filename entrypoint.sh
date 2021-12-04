@@ -2,7 +2,7 @@
 cd "$GITHUB_WORKSPACE" || exit 2
 if [ -z "$INPUT_SOURCES" ]
 then
-    log "\$INPUT_SOURCES is empty. Skipping Action..."
+    echo "Input is empty. Skipping Action."
 else
     echo "-----------"
     clang-format --version
