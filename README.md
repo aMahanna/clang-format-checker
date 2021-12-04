@@ -14,11 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: aMahanna/clang-format-checker@v1.1.0
+      - uses: aMahanna/clang-format-checker@v1.2.0
         with:
           sources: "src/Card.h src/Card.cpp lib/**/*.h"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Common use case:
@@ -42,9 +40,7 @@ jobs:
             **/*.hpp
             **/*.c
             **/*.h
-      - uses: aMahanna/clang-format-checker@v1.1.0
+      - uses: aMahanna/clang-format-checker@v1.2.0
         with:
           sources: "${{ steps.gcf.outputs.added_modified }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
