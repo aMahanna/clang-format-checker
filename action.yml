@@ -1,9 +1,9 @@
 name: 'clang-format-checker'
-description: 'Google-style linter, wip.'
+description: 'alerts clang-format errors'
 author: 'aMahanna'
 branding:
   icon: 'code'
-  color: 'orange'
+  color: 'red'
 inputs: 
   sources:
     description: Names of the files/directories to check (space-delimited)
